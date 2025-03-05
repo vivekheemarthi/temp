@@ -1,0 +1,85 @@
+#include <stdio.h>
+#define ROWS 3 
+#define COLS 3 
+
+// Function to transpose the matrix
+void transpose_of_matrix(int (*arr)[COLS]) {
+    int temp;
+    for(int i = 0; i < ROWS; i++) {
+        for(int j = i + 1; j < COLS; j++) {  // Corrected: Transpose swaps upper-triangle only
+            temp = arr[i][j];
+            arr[i][j] = arr[j][i];
+            arr[j][i] = temp;
+        }
+    }
+}
+
+// Function to rotate the matrix 90° clockwise
+void rotate_90_deg_clk_wise(int (*arr)[COLS]) {
+    transpose_of_matrix(arr);  // Step 1: Transpose
+    // Step 2: Reverse each row
+    int temp;
+    for(int i = 0; i < ROWS; i++) {
+        for(int j = 0; j < COLS / 2; j++) {
+            temp = arr[i][j];
+            arr[i][j] = arr[i][COLS - 1 - j];
+            arr[i][COLS - 1 - j] = temp;
+        }
+    }
+}
+
+// Function to rotate the matrix 90° anti-clockwise
+void rotate_90_deg_anti_clk_wise(int (*arr)[COLS]) {
+    transpose_of_matrix(arr);  // Step 1: Transpose
+    // Step 2: Reverse each column
+    int temp;
+    for(int j = 0; j < COLS; j++) {
+        for(int i = 0; i < ROWS / 2; i++) {
+            temp = arr[i][j];
+            arr[i][j] = arr[ROWS - 1 - i][j];
+            arr[ROWS - 1 - i][j] = temp;
+        }
+    }
+}
+
+// Function to print the matrix
+void print_matrix(int (*arr)[COLS]) {
+    for(int i = 0; i < ROWS; i++) {
+        for(int j = 0; j < COLS; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int arr[ROWS][COLS];
+    int dir;
+
+    printf("Enter The Matrix (%d × %d):\n", ROWS, COLS);
+    for(int i = 0; i < ROWS; i++) {
+        for(int j = 0; j < COLS; j++) {
+            scanf("%d", &arr[i][j]);
+        }
+    }
+
+    printf("\nOriginal Matrix:\n");
+    print_matrix(arr);
+
+    printf("\nEnter Direction to Rotate:\n1. Clockwise (90°) \n2. Anti-clockwise (90°)\n");
+    scanf("%d", &dir);
+
+    if(dir == 1) {
+        rotate_90_deg_clk_wise(arr);
+        printf("\nMatrix Rotated 90° Clockwise:\n");
+    } else if(dir == 2) {
+        rotate_90_deg_anti_clk_wise(arr);
+        printf("\nMatrix Rotated 90° Anti-clockwise:\n");
+    } else {
+        printf("Invalid direction! Please enter 1 or 2.\n");
+        return 1;
+    }
+
+    print_matrix(arr);
+    return 0;
+}
