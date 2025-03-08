@@ -1,0 +1,27 @@
+/*
+Count the number of zeros
+
+*/
+
+#include <stdio.h>
+
+int countSetBits(int n) {
+    int count = 0;
+    while (n) {
+        n &= (n - 1);  // Removes the rightmost set bit
+        count++;
+    }
+    return count;
+}
+
+int countZeroBits(int n) {
+    int totalBits = sizeof(n) * 8;  // Typically 32 bits for int
+    int setBits = countSetBits(n);  // Count number of 1s
+    return totalBits - setBits;     // Total bits - 1s = 0s
+}
+
+int main() {
+    int n = 11;
+    printf("Number of zeros: %d\n", countZeroBits(n));
+    return 0;
+}
