@@ -1,6 +1,5 @@
-/******************* only for when the array is sorted and when duplicate valie has only 2 times occured *****************/
-/*
 
+/* only when two duplicate elements exists*/
 
 Given an integer array nums of length n where all the integers of nums are in the range [1, n] and each integer appears at most twice, return an array of all the integers that appears twice.
 
@@ -47,13 +46,12 @@ int* findDuplicates(int* nums, int numsSize, int* returnSize) {
 }
 
 
+/* for more than two duplicate */
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
-
-/*  many duplicate values and unsorted array also */
-/*
-If numsSize = 5 and nums[i] = 5, we need seen[5] to exist.
-If we allocate only numsSize, the highest valid index would be 4, causing out-of-bounds errors.
-*/
 int* findDuplicates(int* nums, int numsSize, int* returnSize) {
     int *ptr = (int *)malloc(numsSize * sizeof(int));
     int val = 0;
@@ -77,3 +75,6 @@ int* findDuplicates(int* nums, int numsSize, int* returnSize) {
 
     return ptr;
 }
+
+
+
