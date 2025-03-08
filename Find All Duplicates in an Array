@@ -1,4 +1,4 @@
-
+/******************* only for when the array is sorted and when duplicate valie has only 2 times occured *****************/
 /*
 
 
@@ -43,5 +43,37 @@ int* findDuplicates(int* nums, int numsSize, int* returnSize) {
         }
 
     }
+    return ptr;
+}
+
+
+
+
+/*  many duplicate values and unsorted array also */
+/*
+If numsSize = 5 and nums[i] = 5, we need seen[5] to exist.
+If we allocate only numsSize, the highest valid index would be 4, causing out-of-bounds errors.
+*/
+int* findDuplicates(int* nums, int numsSize, int* returnSize) {
+    int *ptr = (int *)malloc(numsSize * sizeof(int));
+    int val = 0;
+    *returnSize = 0;
+    
+    bool seen[numsSize + 1];  // Track already stored duplicates
+    memset(seen, 0, sizeof(seen));  
+
+    for (int i = 0; i < numsSize; i++) {
+        val = abs(nums[i]);
+
+        if (nums[val - 1] < 0) {  // Already visited, so it's a duplicate
+            if (!seen[val]) {  // Ensure it's added only once
+                ptr[(*returnSize)++] = val;
+                seen[val] = true;  // Mark as added
+            }
+        } else {
+            nums[val - 1] = -nums[val - 1];  // Mark as visited
+        }
+    }
+
     return ptr;
 }
