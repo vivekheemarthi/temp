@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <string.h>
+
+void reverse_fun(char *s, int w_start, int w_end) {
+    char temp;
+    while (w_start < w_end) {
+        temp = s[w_start];
+        s[w_start] = s[w_end];
+        s[w_end] = temp;
+        w_start++;
+        w_end--;
+    }
+}
+
+char* reverseWords(char* s) {
+    int len = strlen(s);
+    if (len == 0) return s;
+
+    // Step 1: Reverse the entire string
+    reverse_fun(s, 0, len - 1);
+
+    // Step 2: Reverse each word
+    int w_start = 0, w_end = 0;
+    while (w_end < len) {
+        // Skip spaces
+        while (w_end < len && s[w_end] == ' ') {
+            w_end++;
+        }
+        if (w_end >= len) break; // If only spaces remain
+
+        w_start = w_end; // Start of the word
+
+        // Find end of word
+        while (w_end < len && s[w_end] != ' ') {
+            w_end++;
+        }
+
+        // Reverse the word
+        reverse_fun(s, w_start, w_end - 1);
+    }
+
+    return s;
+}
+
+int main() {
+    char s[] = "  hello   world  ";
+    printf("Reversed: \"%s\"\n", reverseWords(s));
+    return 0;
+}
